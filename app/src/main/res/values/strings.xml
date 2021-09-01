@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FirstApplication</string>
+    <string name="name">Nadir Ali</string>
+    <string name="session">BSIT</string>
+    <string name="semester">6th</string>
+    <string name="course">Mobile Application Development</string>
 </resources>
