@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import javax.security.auth.login.LoginException;
+
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     Button btLogin;
     EditText etUserName;
     EditText etPassword;
@@ -23,6 +27,26 @@ public class MainActivity extends AppCompatActivity {
         etUserName = findViewById(R.id.etUserName);
         etPassword = findViewById(R.id.etPassword);
         tvRegister = findViewById(R.id.tvRegister);
+        Log.e(TAG, "onCreate: Last Line");
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "onClick: Register Clicked");
+            }
+        });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: is called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: is called");
     }
 
     public void LoginClicked(View view) {
@@ -43,10 +67,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }else{
             Toast.makeText(MainActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "LoginClicked: " );
         }
-    }
-
-    public void registerClicked(View view) {
-        Toast.makeText(MainActivity.this,"Register Clicked",Toast.LENGTH_LONG).show();
+        Log.e(TAG, "LoginClicked: "+userName);
     }
 }
