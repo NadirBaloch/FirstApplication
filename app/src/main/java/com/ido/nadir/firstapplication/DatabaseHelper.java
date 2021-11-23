@@ -38,11 +38,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insertIntoTable(String name, String currency){
+    public void insertIntoTable(Country country){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NAME,name);
-        values.put(CURRENCY,currency);
+        values.put(NAME,country.name);
+        values.put(CURRENCY,country.currency);
         db.insert(TABLE_CURRENCY_DETAIL,null,values);
         db.close();
     }
