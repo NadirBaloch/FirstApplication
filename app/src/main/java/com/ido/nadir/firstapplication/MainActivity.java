@@ -1,12 +1,16 @@
 package com.ido.nadir.firstapplication;
 
+import static java.sql.DriverManager.println;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.textclassifier.TextLinks;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,7 +19,12 @@ import android.widget.Toast;
 
 import javax.security.auth.login.LoginException;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity {
+    public String url = "https://6217195471e7672e53735dca.mockapi.io/api/v1/test/2";
     private static final String TAG = "MainActivity";
     public static final String PREF = "myPref";
     Button btLogin;
@@ -33,14 +42,40 @@ public class MainActivity extends AppCompatActivity {
         tvRegister = findViewById(R.id.tvRegister);
         cbStaySigned = findViewById(R.id.cbStaySigned);
         Log.e(TAG, "onCreate: Last Line");
-        tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e(TAG, "onClick: Register Clicked");
-            }
-        });
+
+        OKHTTPHandler okhttpHandler = new OKHTTPHandler();
+        okhttpHandler.execute();
     }
 
+    public class OKHTTPHandler extends AsyncTask {
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            Log.i(TAG, "onPostExecute: download finished");
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.i(TAG, "onPreExecute: I am about to download names");
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        @Override
+        protected Object doInBackground(Object[] objects) {
+                Request.Builder builder = new Request.Builder();
+                builder.url(url);
+                Request request =builder.build();
+                try{
+                    Response response = client.newCall(request).execute();
+                    Log.i(TAG, "download doInBackground: "+response.body().string());
+                    return response.body().string();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            return null;
+        }
+    }
 
     @Override
     protected void onStart() {
@@ -102,4 +137,10 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.e(TAG, "LoginClicked: "+userName);
     }
+
+    public void registerButtonClicked(View view) {
+        Log.i(TAG, "registerButtonClicked: Register clicked");
+    }
+
+
 }

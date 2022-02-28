@@ -61,6 +61,7 @@
         android:backgroundTint="@color/white"
         android:backgroundTintMode="add"
         android:gravity="center"
+        android:onClick="registerButtonClicked"
         android:text="Register"
         android:textColor="@color/purple_700"
         android:textStyle="bold"
