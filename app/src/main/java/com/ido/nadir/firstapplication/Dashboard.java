@@ -42,6 +42,13 @@ public class Dashboard extends AppCompatActivity {
         Log.e(TAG, "onCreate: First Function");
     }
 
+    @Override
+    public void onBackPressed() {
+        //TODO ASIGNMENT make changes in sharedPreference for logout
+
+        super.onBackPressed();
+    }
+
     private void populateList() {
         ArrayList<String> arrayList = new ArrayList<>();
         Cursor cursor = dbHelper.getCurrencyDetails();
